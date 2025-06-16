@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI News Portal</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f4f6fb;
+            color: #222;
+        }
+        header {
+            background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            padding: 2rem 0 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(30,60,114,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+        nav {
+            margin-top: 1rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #ffd700;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .news-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(44,62,80,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .news-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(44,62,80,0.16);
+        }
+        .news-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .news-content {
+            padding: 1.2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .news-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+            color: #1e3c72;
+        }
+        .news-meta {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 0.7rem;
+        }
+        .news-desc {
+            flex: 1;
+            font-size: 1rem;
+            color: #333;
+        }
+        .read-more {
+            margin-top: 1rem;
+            align-self: flex-start;
+            background: #1e3c72;
+            color: #fff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        .read-more:hover {
+            background: #ffd700;
+            color: #1e3c72;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(30,60,114,0.25);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 14px;
+            max-width: 500px;
+            width: 90vw;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+            position: relative;
+            animation: popIn 0.25s;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #1e3c72;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .modal-close:hover {
+            background: #ffd700;
+            color: #1e3c72;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        .modal-meta {
+            font-size: 0.95rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+        .modal-body {
+            font-size: 1.08rem;
+            color: #222;
+            line-height: 1.6;
+        }
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            .news-card {
+                min-width: 0;
+            }
+            .modal-content {
+                padding: 1.2rem 0.7rem 1rem 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI News Portal</h1>
+    </header>
+    <div class="container">
+        <div class="news-grid">
+            <div class="news-card" data-title="AI Revolutionizes Healthcare Diagnostics"
+                data-meta="June 16, 2025 • By Jane Doe"
+                data-detail="Artificial Intelligence is transforming the healthcare industry by enabling faster and more accurate diagnostics, improving patient outcomes, and reducing costs. AI-powered imaging tools can detect diseases at earlier stages, while predictive analytics help doctors make better decisions. Hospitals are adopting AI for workflow automation, reducing administrative burdens, and enhancing patient care. As AI continues to evolve, its impact on healthcare will only grow, promising a future of smarter, more efficient medicine.">
+                <img class="news-image" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="AI News">
+                <div class="news-content">
+                    <div class="news-title">AI Revolutionizes Healthcare Diagnostics</div>
+                    <div class="news-meta">June 16, 2025 &bull; By Jane Doe</div>
+                    <div class="news-desc">
+                        Artificial Intelligence is transforming the healthcare industry by enabling faster and more accurate diagnostics, improving patient outcomes, and reducing costs.
+                    </div>
+                    <button class="read-more">Read More</button>
+                </div>
+            </div>
+            <div class="news-card" data-title="OpenAI Releases New GPT-5 Model"
+                data-meta="June 15, 2025 • By John Smith"
+                data-detail="OpenAI has announced the release of GPT-5, featuring improved reasoning, multilingual support, and enhanced safety measures for responsible AI deployment. The new model can generate more coherent and contextually relevant text, supports over 100 languages, and includes advanced safeguards to prevent misuse. Early adopters report significant improvements in creative writing, code generation, and conversational AI. OpenAI continues to lead the way in developing safe and powerful AI technologies for the world.">
+                <img class="news-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="AI News">
+                <div class="news-content">
+                    <div class="news-title">OpenAI Releases New GPT-5 Model</div>
+                    <div class="news-meta">June 15, 2025 &bull; By John Smith</div>
+                    <div class="news-desc">
+                        OpenAI has announced the release of GPT-5, featuring improved reasoning, multilingual support, and enhanced safety measures for responsible AI deployment.
+                    </div>
+                    <button class="read-more">Read More</button>
+                </div>
+            </div>
+            <div class="news-card" data-title="AI Startups Attract Record Investments"
+                data-meta="June 14, 2025 • By Alex Lee"
+                data-detail="Venture capital funding for AI startups has reached an all-time high, with investors betting big on the future of artificial intelligence across industries. Startups are innovating in areas such as autonomous vehicles, natural language processing, and robotics. This surge in investment is fueling rapid growth, job creation, and technological breakthroughs. Experts predict that the AI startup ecosystem will continue to expand, driving the next wave of digital transformation.">
+                <img class="news-image" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80" alt="AI News">
+                <div class="news-content">
+                    <div class="news-title">AI Startups Attract Record Investments</div>
+                    <div class="news-meta">June 14, 2025 &bull; By Alex Lee</div>
+                    <div class="news-desc">
+                        Venture capital funding for AI startups has reached an all-time high, with investors betting big on the future of artificial intelligence across industries.
+                    </div>
+                    <button class="read-more">Read More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Popup -->
+    <div class="modal" id="newsModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal" aria-label="Close">&times;</button>
+            <div class="modal-title" id="modalTitle"></div>
+            <div class="modal-meta" id="modalMeta"></div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 AI News Portal. All rights reserved.
+    </footer>
+    <script>
+        // Modal logic
+        const modal = document.getElementById('newsModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMeta = document.getElementById('modalMeta');
+        const modalBody = document.getElementById('modalBody');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        document.querySelectorAll('.read-more').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const card = btn.closest('.news-card');
+                modalTitle.textContent = card.getAttribute('data-title');
+                modalMeta.textContent = card.getAttribute('data-meta');
+                modalBody.textContent = card.getAttribute('data-detail');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // Close modal on outside click
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeModal();
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
